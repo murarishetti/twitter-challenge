@@ -21,11 +21,12 @@ $(document).ready(function(){
                         );
                         obj["_source"]["message"] = obj["_source"]["message"].substr(0, obj["_source"]["message"].indexOf("http"))
                         tmp = tmp + "<tr> <td>" + obj["_source"]["time"] + "</td>" +
-                                "<td>" + obj["_source"]["message"] + "<a href='" + link + "' target='blank'>" + link + "</a> </td>" +
+                                "<td class='context'>" + obj["_source"]["message"] + "<a href='" + link + "' target='blank'>" + link + "</a> </td>" +
                                 "<td>" + obj["_source"]["user"] + "</td> </td>";
                     // console.log(obj["_source"]["message"]);
                   })
                   $("#tweetsTableData").append(tmp);
+                  $('.context').mark(searchTerm);
                }
                
             }
