@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 var indexing2 = require('./controllers/indexing.js');
 
-//indexing2.indexing();
+// indexing2.indexing();
 var client = require('./controllers/elasticsearch.js');
 // var indices = function indices() {
 //   return client.cat.indices({v: true})

@@ -16,10 +16,12 @@ module.exports.indexing = function() {
 	var bulkBody = [];
 
 	lineReader.on('line', function (line) {
+		line = line.replace(/ +(?= )/g,'');
+		line = line.trim();
 		var string = line.split(" ");
 		var messageTime = string[0] + " " + string[1];
-		var user = string[string.length - 2];
-		string = string.slice(2, string.length - 2)
+		var user = string[string.length - 1];
+		string = string.slice(2, string.length - 1)
 		var message = string.join(" ");
 		var item = {
 			id: lineCount,
@@ -27,7 +29,10 @@ module.exports.indexing = function() {
 			user: user,
 			message: message
 		}
-		console.log(message)
+		if(lineCount == 655) {
+			console.log(line);
+		}
+		//console.log(user, message);
 		bulkBody.push({
 	      index: {
 	        _index: "tweets",
@@ -57,7 +62,7 @@ module.exports.indexing = function() {
 		  })
 		  .catch(console.err);
 
-		//console.log(matchArray);
+		console.log(matchArray);
 	})
 	
 }
