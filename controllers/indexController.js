@@ -1,8 +1,12 @@
 var fs = require('fs');
 var client = require('./elasticsearch.js')
 
+function get_data() {
+
+}
+
 module.exports.get_tweets = function(req, res) {
-	 var searchTerm = req.body.term;
+	var searchTerm = req.body.term;
 
 	console.log("inside search",searchTerm);
 	var search = function search(index, body) {
@@ -11,13 +15,19 @@ module.exports.get_tweets = function(req, res) {
 
 	//var test = function test() {
 	  var body = {
-	    size: 15,
+	    size: 10,
 	    from: 0,
 	    "query": {
-	      "query_string": {
-            "fields" : ["message", "user"],
-            "query" : searchTerm
+	      "multi_match": {
+            	"query" : searchTerm,
+            	"operator" : "and",
+            	"fields": ["message", "user"]
         	}
+	    },
+	    "highlight": {
+	    	"fields": {
+	    		"message" : {}
+	    	}
 	    }
 	  }
 
@@ -30,7 +40,8 @@ module.exports.get_tweets = function(req, res) {
 	        `\t${body.from + ++index} - ${hit._source.message}`
 	      )
 	    )
-	    //console.log("results",results.hits.hits[0]._source.message)
+	    console.log(searchTerm)
+	    console.log("results",results.hits.hits[0])
 	    res.json({
 	    	success: results.hits.hits
 	    })
@@ -41,5 +52,38 @@ module.exports.get_tweets = function(req, res) {
 }
 
 module.exports.get_index = function(req, res) {
-	res.render('index');
+	var search = function search(index, body) {
+	  return client.search({index: index, body: body});
+	};
+
+	//var test = function test() {
+	  var body = {
+	    size: 10,
+	    from: 0,
+	    "query" : {
+		    "match_all": {
+		    }
+		  }
+	  }
+
+	  search('tweets', body)
+	  .then(results => {
+	    //console.log(`found ${results.hits.total} items in ${results.took}ms`);
+	    //console.log(`returned article titles:`);
+	    results.hits.hits.forEach(
+	      (hit, index) => console.log(
+	        `\t${body.from + ++index} - ${hit._source.message}`
+	      )
+	    )
+	    console.log("results",results.hits.hits[0]);
+	    var tweets = {
+	    	"success" : results.hits.hits
+	    }
+		res.render('index', {
+			tweets : tweets
+		});
+	    
+	  })
+	  .catch(console.log("Error"));
+	//};
 }

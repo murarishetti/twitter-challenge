@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var elasticsearch=require('elasticsearch');
  
 app.set('public',__dirname+'/public');
-app.set("view engine", "ejs");
+app.set("view engine", "ejs")
 app.set('port',  process.env.PORT || 3000);
 
 app.use(express.static(path.join(__dirname, 'public')));
