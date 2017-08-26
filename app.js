@@ -9,19 +9,11 @@ app.set("view engine", "ejs")
 app.set('port',  process.env.PORT || 3000);
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.use(bodyParser.json()); 
+app.use(bodyParser.urlencoded({ extended: true }));
 
 var indexing2 = require('./controllers/indexing.js');
-
 // indexing2.indexing();
-var client = require('./controllers/elasticsearch.js');
-// var indices = function indices() {
-//   return client.cat.indices({v: true})
-//   .then(console.log)
-//   .catch(err => console.error(`Error connecting to the es client: ${err}`));
-// };
-// indices();
 var indexRoute = require('./routes/indexRoute.js');
 app.use('/', indexRoute);
 
