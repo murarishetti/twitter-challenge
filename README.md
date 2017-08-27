@@ -1,4 +1,4 @@
- # Twitter-Feed-Search-Engine
+# Twitter-Feed-Search-Engine
 
 Url: https://twitter-challenge.herokuapp.com
 
@@ -13,7 +13,7 @@ Install Node and NPM
 If you would like to do indexing for new txt file. Replace the current file and run **node app.js index**. 
 Otherwise run simply **node app.js**
 
-#About application
+# About application
 It is a search engine application for searching tweets. It is implemented using elastic search for storing and indexing the data. Elastic search provides one-one mapping using REST API or by installing locally. You can search for entire tweets and within the tweets. If you click on **@users** keyword, it will start searching for that user. The search results are sorted by relevance
 
 # Indexing in Elastic cluster
