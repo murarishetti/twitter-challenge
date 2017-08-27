@@ -14,7 +14,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 var indexing = require('./controllers/indexing.js');
 var client = require('./controllers/elasticsearch.js');
-// indexing.indexing();
+console.log(process.argv[2]);
+if (process.argv.length > 2) {
+	if ((process.argv[2]).indexOf("index") > -1) {
+		indexing.indexing();
+	}
+}
+
 var indexRoute = require('./routes/indexRoute.js');
 app.use('/', indexRoute);
 
