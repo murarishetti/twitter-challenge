@@ -2,7 +2,6 @@ $(document).ready(function() {
     $(document).on('keyup', '#myInput', function() {
         var searchTerm = $("#myInput").val();
         var flag = 0;
-        // console.log(searchTerm);
         var data = {
             term: searchTerm,
             count: 0
@@ -16,10 +15,7 @@ $(document).ready(function() {
                 resultData,
                 response
             ) {
-                if (
-                    searchTerm ==
-                    ""
-                ) {
+                if (searchTerm == "") {
                     displayEmpty
                         (
                             flag,
@@ -40,7 +36,6 @@ $(document).ready(function() {
 
 function displayEmpty(flag, resultData) {
     var data = JSON.parse(resultData)
-        // console.log(data["success"]);
     if (!flag) {
         $("#tweetsTableData").empty();
     }
@@ -82,35 +77,53 @@ function display(flag, resultData) {
 
     var tmp = "";
     data["success"].forEach(function(obj) {
-
         var row = obj["highlight"]["message"][0];
         var keyword = "";
-        var link = row.substr(
-            row.indexOf("http"), row.length
-        );
-        if (row.indexOf("@") > -1) {
-            var tmp2 = link.split(" ")
-            link = tmp2[0];
-            keyword = tmp2[2];
+        var link = "";
+        var linkIndex = -1;
+        var highlight = row.substr(row.indexOf("<em>"), row.indexOf("</em>"))
+        if (row.indexOf("http") > -1) {
+            link = row.substr(row.indexOf("http"), row.length);
+            linkIndex = row.indexOf("http");
+        }
+       
+        if (row.indexOf('@') > -1) {
+            if (linkIndex > -1) {
+                var tmp2 = link.split(" ")
+                link = tmp2[0];
+                keyword = tmp2[2];
+            }
+            else {
+                keyword = row.substr(row.indexOf('@'), row.indexOf('</em>') - 2)
+            }
         }
 
-        row = row.substr(0, row.indexOf("http"))
+        row = row.replace(keyword, "");
+        if(link != "") {
+            row = row.replace(link, "");
+        }
         tmp = tmp + "<tr> <td>" + obj["_source"]["time"] +
             "</td>" +
-            "<td class='context'>" + row +
-            "<a href='" + link +
+            "<td class='context'>" + row;
+        if (linkIndex > -1) {
+            tmp = tmp + "<a href='" + link +
             "' target='blank'>" + link + "</a> " +
             "<a href='#' class='keyword'>" +
             keyword + "</a> </td>" +
             "<td>" + obj["_source"]["user"] +
             "</td> </td>";
-        $('.context').mark(link);
+        }
+        else {
+            tmp = tmp + "<a href='#' class='keyword'>" +
+            keyword + "</a> </td>" +
+            "<td>" + obj["_source"]["user"] +
+            "</td> </td>";
+        }
     })
     $("#tweetsTableData").append(tmp);
 }
 $(document).ready(function() {
     $(document).delegate("em", "click", function() {
-        // console.log("delegate", $(this).html());
         var searchTerm = $(this).html();
         var flag = 0;
         $("#myInput").val(searchTerm);
@@ -143,7 +156,6 @@ $(document).ready(function() {
     $("#load").on("click", function() {
         counter++;
         var searchTerm = $("#myInput").val();
-        // console.log(searchTerm);
         var data = {
             term: searchTerm,
             count: counter
@@ -157,10 +169,7 @@ $(document).ready(function() {
                 resultData,
                 response
             ) {
-                if (
-                    searchTerm ==
-                    ""
-                ) {
+                if (searchTerm == "") {
                     displayEmpty
                         (
                             flag,

@@ -13,6 +13,10 @@ module.exports.indexing = function() {
                         edge_ngram_analyzer: {
                             tokenizer: "standard",
                             filter: ["lowercase", "edge_ngram_filter"]
+                        },
+                        tweet_analyzer: {
+                            tokenizer: 'standard',
+                            filter: ['lowercase', 'standard', 'stop_words']
                         }
                     },
                     filter: {
@@ -20,6 +24,10 @@ module.exports.indexing = function() {
                             type: "edge_ngram",
                             min_gram: 1,
                             max_gram: 30
+                        },
+                        stop_words: {
+                            type: 'stop',
+                            stopwords: '_english_'
                         }
                     }
                 }
@@ -34,7 +42,7 @@ module.exports.indexing = function() {
                     message: {
                         type: 'string',
                         analyzer: 'edge_ngram_analyzer',
-                        search_analyzer: 'standard'
+                        search_analyzer: 'tweet_analyzer'
                     }
                 }
             }
