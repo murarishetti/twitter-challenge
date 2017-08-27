@@ -12,8 +12,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var indexing2 = require('./controllers/indexing.js');
-// indexing2.indexing();
+var indexing = require('./controllers/indexing.js');
+var client = require('./controllers/elasticsearch.js');
+indexing.indexing();
 var indexRoute = require('./routes/indexRoute.js');
 app.use('/', indexRoute);
 
