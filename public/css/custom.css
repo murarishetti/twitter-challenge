@@ -1,16 +1,6 @@
-em{
+em {
   background: yellow;
   color: black;
-}
-
-#myInput {
-  background-position: 10px 10px;
-  background-repeat: no-repeat;
-  width: 100%;
-  font-size: 16px;
-  padding: 12px 20px 12px 40px;
-  border: 1px solid #ddd;
-  margin-bottom: 12px;
 }
 
 #myTable {
@@ -18,6 +8,7 @@ em{
   width: 100%;
   border: 1px solid #ddd;
   font-size: 18px;
+  margin-top: 25px;
 }
 
 #myTable th, #myTable td {
@@ -32,3 +23,51 @@ em{
 #myTable tr.header, #myTable tr:hover {
   background-color: #f1f1f1;
 }
+
+body {
+  background-color: #f5f8fa;
+}
+
+.content {
+  margin-top: 30px;
+  margin-bottom: 100px;
+}
+
+.glyphicon-search {
+  font-size: 20px;
+  color: white;
+}
+
+.btn-default {
+  background: #1da1f2;
+  width: 100px;
+  padding: 12.5px;
+}
+
+.form-control {
+  padding: 25px;
+  font-size: 20px;
+}
+
+.w20 {
+	width: 20%;
+}
+
+.w60 {
+	width: 60%;
+}
+
+.primary {
+	color: #1da1f2;
+}
+
+.title {
+	color: #0084b4;
+}
+
+#search-button:hover,
+#search-button:focus,
+#search-button:active {
+	background-color: #1da1f2;
+}
+
