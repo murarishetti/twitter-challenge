@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var indexing = require('./controllers/indexing.js');
 var client = require('./controllers/elasticsearch.js');
 console.log(process.argv[2]);
+
 if (process.argv.length > 2) {
 	if ((process.argv[2]).indexOf("index") > -1) {
 		indexing.indexing();

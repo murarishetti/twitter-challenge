@@ -81,6 +81,7 @@ function display(flag, resultData) {
         var keyword = "";
         var link = "";
         var linkIndex = -1;
+        var hash = "";
         var highlight = row.substr(row.indexOf("<em>"), row.indexOf("</em>"))
         if (row.indexOf("http") > -1) {
             link = row.substr(row.indexOf("http"), row.length);
@@ -98,6 +99,17 @@ function display(flag, resultData) {
             }
         }
 
+        if (row.indexOf('#') > -1) {
+            hash = hash + "#";
+            for (var i = row.indexOf('#') + 1;i < row.length;i++) {
+                if(row[i] == " ") {
+                    break;
+                } else {
+                    hash = hash + row[i];
+                }
+            }
+        }
+        row = row.replace(hash, "");
         row = row.replace(keyword, "");
         if(link != "") {
             row = row.replace(link, "");
@@ -107,7 +119,8 @@ function display(flag, resultData) {
             "<td class='context'>" + row;
         if (linkIndex > -1) {
             tmp = tmp + "<a href='" + link +
-            "' target='blank'>" + link + "</a> " +
+            "' target='blank'>" + link + "</a> " + "<a href='#' class='keyword'>" +
+            hash + "</a>" +
             "<a href='#' class='keyword'>" +
             keyword + "</a> </td>" +
             "<td>" + obj["_source"]["user"] +
@@ -115,6 +128,7 @@ function display(flag, resultData) {
         }
         else {
             tmp = tmp + "<a href='#' class='keyword'>" +
+            hash + "</a>"+ "<a href='#' class='keyword'>" +
             keyword + "</a> </td>" +
             "<td>" + obj["_source"]["user"] +
             "</td> </td>";
@@ -123,7 +137,7 @@ function display(flag, resultData) {
     $("#tweetsTableData").append(tmp);
 }
 $(document).ready(function() {
-    $(document).delegate("em", "click", function() {
+    $(document).delegate("a", "click", function() {
         var searchTerm = $(this).html();
         var flag = 0;
         $("#myInput").val(searchTerm);
