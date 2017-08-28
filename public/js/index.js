@@ -139,6 +139,10 @@ function display(flag, resultData) {
 $(document).ready(function() {
     $(document).delegate("a", "click", function() {
         var searchTerm = $(this).html();
+        searchTerm = searchTerm.replace("<em>", "");
+        searchTerm =  searchTerm.replace("</em>", "")
+        console.log(searchTerm);
+
         var flag = 0;
         $("#myInput").val(searchTerm);
         var data = {
