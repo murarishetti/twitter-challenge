@@ -141,7 +141,6 @@ $(document).ready(function() {
         var searchTerm = $(this).html();
         searchTerm = searchTerm.replace("<em>", "");
         searchTerm =  searchTerm.replace("</em>", "")
-        console.log(searchTerm);
 
         var flag = 0;
         $("#myInput").val(searchTerm);
